@@ -79,6 +79,7 @@ class _ManageClassScreenState extends State<ManageClassScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
         title: Text(
           widget.classTitle,
           style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue),

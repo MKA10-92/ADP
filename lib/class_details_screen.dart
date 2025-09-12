@@ -32,7 +32,6 @@ class _ClassDetailsScreenState extends State<ClassDetailsScreen> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        centerTitle: true,
         title: Text(
           widget.classTitle,
           style: TextStyle(
@@ -96,7 +95,10 @@ class _ClassDetailsScreenState extends State<ClassDetailsScreen> {
                     ),
                   ),
                   child: ExpansionTile(
-                    title: Text("Students"),
+                    title: Text(
+                      "Students",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
                     initiallyExpanded: _studentsExpanded,
                     onExpansionChanged: (expanded) =>
                         setState(() => _studentsExpanded = expanded),
@@ -169,7 +171,7 @@ class _ClassDetailsScreenState extends State<ClassDetailsScreen> {
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
-                  color: Colors.blue,
+                  color: Colors.blue[900],
                 ),
               ),
               StreamBuilder<QuerySnapshot>(

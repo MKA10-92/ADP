@@ -75,7 +75,7 @@ class _FindTutorsScreenState extends State<FindTutorsScreen> {
         elevation: 0,
         centerTitle: true,
         title: Text(
-          "Find Tutors",
+          "Tutors",
           style: TextStyle(
             fontSize: 28,
             fontWeight: FontWeight.bold,
@@ -134,7 +134,10 @@ class _FindTutorsScreenState extends State<FindTutorsScreen> {
                         ),
                       ),
                       child: ExpansionTile(
-                        title: Text("Requested Tutors"),
+                        title: Text(
+                          "Requested Tutors",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
                         initiallyExpanded: _pendingExpanded,
                         onExpansionChanged: (exp) =>
                             setState(() => _pendingExpanded = exp),
@@ -207,7 +210,10 @@ class _FindTutorsScreenState extends State<FindTutorsScreen> {
                         ),
                       ),
                       child: ExpansionTile(
-                        title: Text("My Tutors"),
+                        title: Text(
+                          "My Tutors",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
                         initiallyExpanded: _acceptedExpanded,
                         onExpansionChanged: (exp) =>
                             setState(() => _acceptedExpanded = exp),
@@ -272,7 +278,7 @@ class _FindTutorsScreenState extends State<FindTutorsScreen> {
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 20,
-                          color: Colors.blue,
+                          color: Colors.blue[900],
                         ),
                       ),
                     ),
