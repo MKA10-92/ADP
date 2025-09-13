@@ -57,7 +57,6 @@ class StudentClassScreen extends StatelessWidget {
               padding: EdgeInsets.all(16),
               children: classes.map((classDoc) {
                 final tutorId = classDoc["tutorId"];
-                // Use FutureBuilder to get the tutor's name
                 return FutureBuilder<DocumentSnapshot>(
                   future: FirebaseFirestore.instance
                       .collection("users")

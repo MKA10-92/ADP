@@ -115,7 +115,6 @@ class _FindTutorsScreenState extends State<FindTutorsScreen> {
               padding: EdgeInsets.symmetric(vertical: 20, horizontal: 16),
               child: Column(
                 children: [
-                  // Requested Tutors
                   Card(
                     color: Colors.white,
                     shape: RoundedRectangleBorder(
@@ -191,7 +190,6 @@ class _FindTutorsScreenState extends State<FindTutorsScreen> {
                   ),
                   Divider(),
 
-                  // My Tutors
                   Card(
                     color: Colors.white,
                     shape: RoundedRectangleBorder(
@@ -268,7 +266,6 @@ class _FindTutorsScreenState extends State<FindTutorsScreen> {
                   ),
                   Divider(),
 
-                  // Available Tutors
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Padding(

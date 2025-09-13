@@ -95,7 +95,6 @@ class _ViewStudentsScreenState extends State<ViewStudentsScreen> {
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   children: [
-                    // Pending Applications
                     Theme(
                       data: ThemeData(
                         primarySwatch: Colors.blue,
@@ -190,7 +189,6 @@ class _ViewStudentsScreenState extends State<ViewStudentsScreen> {
                     ),
                     Divider(),
 
-                    // Accepted Students
                     Theme(
                       data: ThemeData(
                         primarySwatch: Colors.blue,

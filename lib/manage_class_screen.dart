@@ -91,7 +91,6 @@ class _ManageClassScreenState extends State<ManageClassScreen> {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [Colors.lightBlueAccent, Colors.white],
-            begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
         ),
@@ -101,7 +100,6 @@ class _ManageClassScreenState extends State<ManageClassScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Add Students Section (white card)
                 Card(
                   color: Colors.white,
                   margin: EdgeInsets.symmetric(vertical: 8),
@@ -199,7 +197,6 @@ class _ManageClassScreenState extends State<ManageClassScreen> {
                 ),
                 Divider(height: 30),
 
-                // Accepted Students Section (white card)
                 Card(
                   color: Colors.white,
                   margin: EdgeInsets.symmetric(vertical: 8),
@@ -285,7 +282,6 @@ class _ManageClassScreenState extends State<ManageClassScreen> {
                 ),
                 Divider(height: 30),
 
-                // Add Announcement Section (styled)
                 Text(
                   "Add Announcement",
                   style: TextStyle(
@@ -326,8 +322,6 @@ class _ManageClassScreenState extends State<ManageClassScreen> {
                   ),
                 ),
                 SizedBox(height: 16),
-
-                // Announcements Section (title outside, each announcement in white card)
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: Text(

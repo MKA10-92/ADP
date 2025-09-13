@@ -56,7 +56,6 @@ class _ClassDetailsScreenState extends State<ClassDetailsScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Teacher Info
               FutureBuilder<DocumentSnapshot>(
                 future: FirebaseFirestore.instance
                     .collection("users")
@@ -77,7 +76,6 @@ class _ClassDetailsScreenState extends State<ClassDetailsScreen> {
               ),
               SizedBox(height: 20),
 
-              // Students List (Expandable)
               Card(
                 color: Colors.white,
                 shape: RoundedRectangleBorder(
@@ -165,7 +163,6 @@ class _ClassDetailsScreenState extends State<ClassDetailsScreen> {
               ),
               SizedBox(height: 20),
 
-              // Announcements
               Text(
                 "Announcements",
                 style: TextStyle(

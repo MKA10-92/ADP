@@ -107,7 +107,6 @@ class _CreateClassScreenState extends State<CreateClassScreen> {
                         ),
                         SizedBox(height: 20),
 
-                        // Create Button
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.blue,
@@ -122,7 +121,6 @@ class _CreateClassScreenState extends State<CreateClassScreen> {
 
                         SizedBox(height: 20),
 
-                        // My Classes Button
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.blue,

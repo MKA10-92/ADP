@@ -14,14 +14,14 @@ class _AuthScreenState extends State<AuthScreen> {
   final _formKey = GlobalKey<FormState>();
 
   bool isLogin = true;
-  String role = "student"; // default role
+  String role = "student";
   String email = "";
   String password = "";
   String fullName = "";
   String country = "";
   String age = "";
   String availableHours = "";
-  String certificateUrl = ""; // later for tutor upload
+  String certificateUrl = "";
 
   void _submitForm() async {
     final isValid = _formKey.currentState!.validate();
@@ -32,19 +32,16 @@ class _AuthScreenState extends State<AuthScreen> {
     try {
       UserCredential userCredential;
       if (isLogin) {
-        // LOGIN
         userCredential = await _auth.signInWithEmailAndPassword(
           email: email,
           password: password,
         );
       } else {
-        // REGISTER
         userCredential = await _auth.createUserWithEmailAndPassword(
           email: email,
           password: password,
         );
 
-        // Save extra data in Firestore
         await FirebaseFirestore.instance
             .collection("users")
             .doc(userCredential.user!.uid)
@@ -132,7 +129,6 @@ class _AuthScreenState extends State<AuthScreen> {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          // Role Selector
                           if (!isLogin)
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -176,7 +172,6 @@ class _AuthScreenState extends State<AuthScreen> {
                               ],
                             ),
 
-                          // Email
                           TextFormField(
                             key: ValueKey("email"),
                             decoration: InputDecoration(labelText: "Email"),
@@ -186,7 +181,6 @@ class _AuthScreenState extends State<AuthScreen> {
                             onSaved: (value) => email = value!,
                           ),
 
-                          // Password
                           SizedBox(height: 10),
                           TextFormField(
                             key: ValueKey("password"),
@@ -247,8 +241,7 @@ class _AuthScreenState extends State<AuthScreen> {
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.blue,
-                              foregroundColor:
-                                  Colors.white, // <-- button text color
+                              foregroundColor: Colors.white,
                             ),
                             onPressed: _submitForm,
                             child: Text(
