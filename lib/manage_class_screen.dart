@@ -131,40 +131,51 @@ class _ManageClassScreenState extends State<ManageClassScreen> {
 
                           final allStudents = snapshot.data!.docs;
 
-                          return Column(
-                            children: allStudents.map<Widget>((doc) {
-                              final studentId = doc.id;
+                          return FutureBuilder<QuerySnapshot>(
+                            future: FirebaseFirestore.instance
+                                .collection("tutorApplications")
+                                .doc(currentUser.uid)
+                                .collection("requests")
+                                .get(),
+                            builder: (ctx2, tutorSnapAll) {
+                              if (!tutorSnapAll.hasData)
+                                return SizedBox.shrink();
 
-                              return FutureBuilder<DocumentSnapshot>(
-                                future: FirebaseFirestore.instance
-                                    .collection("tutorApplications")
-                                    .doc(currentUser.uid)
-                                    .collection("requests")
-                                    .doc(studentId)
-                                    .get(),
-                                builder: (ctx2, tutorSnap) {
-                                  if (!tutorSnap.hasData)
+                              final acceptedRequests = tutorSnapAll.data!.docs
+                                  .where((doc) => doc["status"] == "accepted")
+                                  .map((doc) => doc.id)
+                                  .toList();
+
+                              return StreamBuilder<DocumentSnapshot>(
+                                stream: classRef.snapshots(),
+                                builder: (ctx3, classSnap) {
+                                  if (!classSnap.hasData)
                                     return SizedBox.shrink();
 
-                                  final accepted =
-                                      tutorSnap.data!.exists &&
-                                      tutorSnap.data!["status"] == "accepted";
+                                  final classStudents = List.from(
+                                    classSnap.data!.get("students") ?? [],
+                                  );
 
-                                  if (!accepted) return SizedBox.shrink();
+                                  final availableStudents = allStudents
+                                      .where(
+                                        (doc) =>
+                                            acceptedRequests.contains(doc.id) &&
+                                            !classStudents.contains(doc.id),
+                                      )
+                                      .toList();
 
-                                  return StreamBuilder<DocumentSnapshot>(
-                                    stream: classRef.snapshots(),
-                                    builder: (ctx3, classSnap) {
-                                      if (!classSnap.hasData)
-                                        return SizedBox.shrink();
+                                  if (availableStudents.isEmpty) {
+                                    return Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text("No students available"),
+                                    );
+                                  }
 
-                                      final classStudents = List.from(
-                                        classSnap.data!.get("students") ?? [],
-                                      );
-
-                                      if (classStudents.contains(studentId))
-                                        return SizedBox.shrink();
-
+                                  return Column(
+                                    children: availableStudents.map<Widget>((
+                                      doc,
+                                    ) {
+                                      final studentId = doc.id;
                                       return ListTile(
                                         title: Text(
                                           doc["fullName"] ?? studentId,
@@ -175,11 +186,11 @@ class _ManageClassScreenState extends State<ManageClassScreen> {
                                               _addStudent(studentId),
                                         ),
                                       );
-                                    },
+                                    }).toList(),
                                   );
                                 },
                               );
-                            }).toList(),
+                            },
                           );
                         },
                       ),

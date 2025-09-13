@@ -1,4 +1,4 @@
-// student ui: containing list of all classroooms they are added in.
+// // student ui: containing list of all classroooms they are added in.
 
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -55,42 +55,71 @@ class StudentClassScreen extends StatelessWidget {
 
             return ListView(
               padding: EdgeInsets.all(16),
-              children: classes.map((doc) {
-                return Card(
-                  margin: EdgeInsets.symmetric(vertical: 8),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  elevation: 4,
-                  child: ListTile(
-                    contentPadding: EdgeInsets.symmetric(
-                      vertical: 8,
-                      horizontal: 16,
-                    ),
-                    title: Text(
-                      doc["title"],
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black87,
-                        fontSize: 18,
+              children: classes.map((classDoc) {
+                final tutorId = classDoc["tutorId"];
+                // Use FutureBuilder to get the tutor's name
+                return FutureBuilder<DocumentSnapshot>(
+                  future: FirebaseFirestore.instance
+                      .collection("users")
+                      .doc(tutorId)
+                      .get(),
+                  builder: (ctx2, tutorSnap) {
+                    String tutorName = "Unknown Tutor";
+                    if (tutorSnap.hasData && tutorSnap.data!.exists) {
+                      tutorName = tutorSnap.data!["fullName"] ?? tutorName;
+                    }
+
+                    return Card(
+                      margin: EdgeInsets.symmetric(vertical: 8),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
                       ),
-                    ),
-                    subtitle: Text(
-                      doc["description"] ?? "",
-                      style: TextStyle(color: Colors.black54),
-                    ),
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (_) => ClassDetailsScreen(
-                            classId: doc.id,
-                            classTitle: doc["title"],
-                            tutorId: doc["tutorId"],
+                      elevation: 4,
+                      child: ListTile(
+                        contentPadding: EdgeInsets.symmetric(
+                          vertical: 8,
+                          horizontal: 16,
+                        ),
+                        title: Text(
+                          classDoc["title"],
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black87,
+                            fontSize: 18,
                           ),
                         ),
-                      );
-                    },
-                  ),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            if (classDoc["description"] != null)
+                              Text(
+                                classDoc["description"],
+                                style: TextStyle(color: Colors.black54),
+                              ),
+                            SizedBox(height: 4),
+                            Text(
+                              "Teacher: $tutorName",
+                              style: TextStyle(
+                                color: Colors.black87,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
+                        ),
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_) => ClassDetailsScreen(
+                                classId: classDoc.id,
+                                classTitle: classDoc["title"],
+                                tutorId: tutorId,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    );
+                  },
                 );
               }).toList(),
             );
